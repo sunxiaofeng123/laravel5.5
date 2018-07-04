@@ -11,11 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    $users = DB::select('select * from users;');
-
-    dd($users);
-
-});
+Route::get('/', 'StaticPagesController@home');
+Route::get('/help', 'StaticPagesController@help');
+Route::get('/about', 'StaticPagesController@about');
 
 
