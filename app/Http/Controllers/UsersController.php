@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Models\User;
 use Auth;
 use Mail;
+use App\Notifications\ResetPassword;
 
 class UsersController extends Controller
 {
@@ -70,8 +71,8 @@ class UsersController extends Controller
         $to   = $user->email;
         $subject = '感谢注册 SAMPLE 应用！请确认你的邮箱。';
 
-        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
-            $message->from($from, $name)->to($to)->subject($subject);
+        Mail::send($view, $data, function ($message) use ($to, $subject) {
+            $message->to($to)->subject($subject);
         });
 
     }
@@ -127,5 +128,10 @@ class UsersController extends Controller
         $user->delete();
         session()->flash('success', '成功删除用户');
         return back();
+    }
+    //发送重置密码邮件
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }
