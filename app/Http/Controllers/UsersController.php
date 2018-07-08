@@ -7,7 +7,6 @@ use App\Http\Requests;
 use App\Models\User;
 use Auth;
 use Mail;
-use App\Notifications\ResetPassword;
 
 class UsersController extends Controller
 {
@@ -129,9 +128,5 @@ class UsersController extends Controller
         session()->flash('success', '成功删除用户');
         return back();
     }
-    //发送重置密码邮件
-    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new ResetPassword($token));
-    }
+
 }
